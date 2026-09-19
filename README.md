@@ -66,7 +66,7 @@ Each section below is the whole job: what the page is for, what to read, what to
 must be exact, and how to know it is done. The demo is the reference implementation; the document is
 the contract. Where they disagree, the document wins and the demo is the bug.
 
-### Home, `/` — `docs/02-HOME.md`, from `docs/demo/index.html`
+### Home, `/` (docs/02-HOME.md, from docs/demo/index.html)
 
 Say what FINTRA is, what it does and what it stands for, inside the first screen.
 
@@ -81,7 +81,7 @@ Say what FINTRA is, what it does and what it stands for, inside the first screen
 - Adding the clip to other pages is the `.bg` block plus the scrub block in `site.js`, and nothing
   else.
 
-### Departments, `/departments` — `docs/03-DEPARTMENTS.md`, from `docs/demo/departments.html`
+### Departments, `/departments` (docs/03-DEPARTMENTS.md, from docs/demo/departments.html)
 
 Show every department, its people, and each person's job description.
 
@@ -94,7 +94,7 @@ Show every department, its people, and each person's job description.
   `assets/media/people/<name-slug>.webp`, `alt=""`, with an initials monogram as the fallback. No
   generated portraits, ever.
 
-### Portfolio, `/portfolio` and `/admin/` — `docs/04-PORTFOLIO.md`, from `docs/demo/portfolio.html` and `docs/demo/admin.html`
+### Portfolio, `/portfolio` and `/admin/` (docs/04-PORTFOLIO.md, from docs/demo/portfolio.html and docs/demo/admin.html)
 
 Track a virtual PSX book and let the EC file trades.
 
@@ -109,7 +109,7 @@ Track a virtual PSX book and let the EC file trades.
 - Tables carry an empty state, a stale state and an error state. A table with only the happy path is
   unfinished.
 
-### GB Application, `/apply` — `docs/05-GB-APPLICATION.md`, from `docs/demo/apply.html`
+### GB Application, `/apply` (docs/05-GB-APPLICATION.md, from docs/demo/apply.html)
 
 Collect General Body applications, once a year, without losing anyone's answers.
 
@@ -124,7 +124,7 @@ Collect General Body applications, once a year, without losing anyone's answers.
   (`apply.html?closed=1` in the demo). The duplicate email notice and the server error state are
   specced in the document and are not modelled in the demo.
 
-### Research, `/research` and `/research/<slug>` — `docs/06-RESEARCH.md`, from `docs/demo/research.html` and `docs/demo/post.html`
+### Research, `/research` and `/research/<slug>` (docs/06-RESEARCH.md, from docs/demo/research.html and docs/demo/post.html)
 
 Publish write-ups that a reader can cite.
 
@@ -135,7 +135,7 @@ Publish write-ups that a reader can cite.
   links return 200; real uploads go to R2 through `functions/api/research.js`.
 - An empty filter result says so in one sentence.
 
-### Competitions, `/competitions` — `docs/07-COMPETITIONS.md`
+### Competitions, `/competitions` (docs/07-COMPETITIONS.md)
 
 Provisional. Confirm it is a page before building it; the document lists what it would need.
 

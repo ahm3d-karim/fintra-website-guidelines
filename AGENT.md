@@ -100,16 +100,16 @@ table you touched. A UI that has only been looked at has not been verified.
 Report a PASS/FAIL gate with evidence, not adjectives. All four blocks must pass before you call
 anything finished:
 
-1. **Hard gate** — no em dash in copy, no overflow or clipping at 390px and desktop, no unsourced
+1. **Hard gate**: no em dash in copy, no overflow or clipping at 390px and desktop, no unsourced
    statistics or fabricated people, every link and control has a real destination or a visible
    "pending" label, contrast measured and passing, keyboard operable with a visible focus ring, every
    state (empty, loading, error, stale) present, and everything exercised in a browser.
-2. **Technique gate** — every non-obvious choice (the wash, the motif, the grayscale multiply, a
+2. **Technique gate**: every non-obvious choice (the wash, the motif, the grayscale multiply, a
    mono face, an animation) has a written one-line reason in `docs/01-DESIGN-SYSTEM.md` or in the
    CSS comment above it. No decoration without a job.
-3. **Liveliness** — one focal point per screen, whitespace structural, exactly one accent, the red
+3. **Liveliness**: one focal point per screen, whitespace structural, exactly one accent, the red
    rule as the single repeated motif, and motion that matches the declared dials.
-4. **Craft** — palette is two colours plus neutrals, radius is 2px on controls and 0 elsewhere,
+4. **Craft**: palette is two colours plus neutrals, radius is 2px on controls and 0 elsewhere,
    CTAs name the action, and the result does not read as a clone of another product.
 
 ## Commits

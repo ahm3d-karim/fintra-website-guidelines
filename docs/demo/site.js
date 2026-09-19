@@ -1,4 +1,4 @@
-// site.js — shared behaviour for the FINTRA demo pages. Nothing here is page specific.
+// site.js: shared behaviour for the FINTRA demo pages. Nothing here is page specific.
 // The .js class that arms the reveal CSS is set by one inline line in each page head, so the
 // first paint already knows whether to hide .rise. Nothing here depends on it.
 
