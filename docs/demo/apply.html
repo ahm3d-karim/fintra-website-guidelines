@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>General Body application — FINTRA</title>
+<link rel="stylesheet" href="site.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <nav class="wrap">
+    <a class="brand" href="index.html">FINTRA</a>
+    <a href="departments.html">Departments</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="research.html">Research</a>
+    <a href="apply.html" aria-current="page">Apply for GB</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="band">
+    <div class="app">
+
+      <div class="app__card" id="formcard">
+        <div class="app__head">
+          <p class="kicker rise">General Body · 2026 to 2027</p>
+          <h1 class="rise d1">Apply for General Body</h1>
+          <p class="lede rise d2">General Body is open to every enrolled LUMS student. Applications close <span class="mono">23:59 PKT, 3 October 2026</span>.</p>
+          <p class="lede rise d3">One sentence on what the term asks of a member, in plain words. If prior experience is not needed, the sentence says so, and it saves two hundred emails.</p>
+        </div>
+
+        <div class="divider" aria-hidden="true"><i></i></div>
+
+        <form data-demo="apply" novalidate>
+          <fieldset>
+            <legend>About you</legend>
+
+            <div class="field">
+              <label for="name">Full name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="60">
+            </div>
+
+            <div class="field">
+              <label for="email">LUMS email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+              <p class="hint">A non <span class="mono">@lums.edu.pk</span> address gets a warning, not a block.</p>
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+              <p class="hint">10 to 14 digits once spaces, dashes and a leading <span class="mono">+92</span> are stripped. Never published.</p>
+            </div>
+
+            <div class="field">
+              <label for="year">Programme and year</label>
+              <input id="year" name="year" type="text" required placeholder="BSc Economics, 2028">
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Where you want to work</legend>
+
+            <div class="field">
+              <label for="first">First choice department</label>
+              <select id="first" name="first" required>
+                <option value="">Choose one</option>
+                <option>Executive Council</option>
+                <option>Marketing &amp; Outreach</option>
+                <option>Competitions</option>
+                <option>Research</option>
+              </select>
+              <p class="hint">Options come from the same file the departments page reads, so the two never drift.</p>
+            </div>
+
+            <div class="field">
+              <label for="second">Second choice department</label>
+              <select id="second" name="second" required>
+                <option value="">Choose one</option>
+                <option>Executive Council</option>
+                <option>Marketing &amp; Outreach</option>
+                <option>Competitions</option>
+                <option>Research</option>
+              </select>
+              <p class="hint">Cannot equal the first choice. If the process never uses it, delete the field rather than collect data nobody reads.</p>
+            </div>
+
+            <div class="field">
+              <label for="why">Why this department <span class="count"></span></label>
+              <textarea id="why" name="why" required data-count="600" data-min="100"></textarea>
+              <p class="err" hidden>At least 100 characters. This is the answer the EC actually reads, and it is never lost to a failed validation.</p>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Experience</legend>
+
+            <div class="field">
+              <label for="exp">Relevant experience <span class="count"></span></label>
+              <textarea id="exp" name="exp" data-count="600"></textarea>
+              <p class="hint">Optional. Up to three links inside the text is fine.</p>
+            </div>
+
+            <div class="field">
+              <label for="more">Anything else <span class="count"></span></label>
+              <textarea id="more" name="more" data-count="300" style="min-height:90px"></textarea>
+            </div>
+
+            <div class="field inline">
+              <input id="honeypot" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true"
+                     style="position:absolute;left:-9999px;width:1px;height:1px">
+              <input id="consent" name="consent" type="checkbox" required>
+              <label for="consent" style="margin:0">I agree that my answers may be reviewed by the Executive Council, and that my contact details are not published. Submissions are exported at the end of the intake and deleted from the database one month after the term starts.</label>
+            </div>
+          </fieldset>
+
+          <div class="lnkrow">
+            <button type="submit">Submit application</button>
+            <a class="btn btn--ghost" href="mailto:finance@lums.edu.pk">Ask the EC first</a>
+          </div>
+          <p class="app__note">Demo form: nothing is filed and no request leaves this page. The reference below is a placeholder.</p>
+        </form>
+
+        <div id="received" hidden class="notice" style="margin:28px 0 0">
+          <h3>Application received</h3>
+          <p>Filed under <span class="mono" data-email></span>. Your reference is <span class="mono" data-ref></span>. The EC will respond by <span class="mono">10 October 2026</span>.</p>
+          <p style="margin-top:10px">The form is replaced here, in place. No redirect, no confetti, no animated tick.</p>
+        </div>
+      </div>
+
+      <div class="app__card" id="closed" hidden>
+        <div class="app__head">
+          <p class="kicker">General Body</p>
+          <h1>Applications are closed</h1>
+          <p class="lede">Thank you to everyone who applied this year. Every response was read, and the volume of them is the reason the term starts with a full team.</p>
+        </div>
+
+        <div class="divider" aria-hidden="true"><i></i></div>
+
+        <div class="app__head">
+          <p class="lede">Every applicant is emailed with an outcome, so nobody is left waiting to hear back. If you missed the window, the next intake opens at the start of the next term, and the departments page is the place to look before then.</p>
+        </div>
+
+        <div class="lnkrow">
+          <a class="btn" href="mailto:finance@lums.edu.pk">Ask about the next intake</a>
+          <a class="btn btn--ghost" href="departments.html">See the departments</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">FINTRA · LUMS · demo build. Placeholders: names, the society email address, the deadline. Shown elsewhere: <span class="mono">?closed=1</span> is the state after the deadline, the server error state is in 05-GB-APPLICATION.md, and the duplicate email notice is not modelled here.</div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>

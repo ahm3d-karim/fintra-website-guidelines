@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio — FINTRA</title>
+<link rel="stylesheet" href="site.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <nav class="wrap">
+    <a class="brand" href="index.html">FINTRA</a>
+    <a href="departments.html">Departments</a>
+    <a href="portfolio.html" aria-current="page">Portfolio</a>
+    <a href="research.html">Research</a>
+    <a href="apply.html">Apply for GB</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow rise">Virtual book, priced from PSX snapshots</p>
+      <h1 class="rise" style="max-width:10ch">Portfolio</h1>
+      <p class="lede mono rise d1" style="margin-top:24px">PKR 83,674.25 &nbsp;·&nbsp; <span class="up">+4.59%</span> since 12 January 2026</p>
+      <p class="rise d2" style="margin-top:18px">Prices: Pakistan Stock Exchange, <span class="mono">dps.psx.com.pk</span>, snapshot <span class="mono">14:32 PKT, 18 Sep 2026</span>.</p>
+      <p class="notice rise d3" style="margin-top:32px">Demo data. Figures below are a worked example, not the society's book. Every number on the built page carries its own <span class="mono">as_of</span>, and the page reads prices from FINTRA's own origin because PSX sends no CORS header.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <dl class="kpi rise">
+        <div><dt>Total value</dt><dd>83,674.25</dd></div>
+        <div><dt>Cash</dt><dd>41,262.00</dd></div>
+        <div><dt>Invested</dt><dd>42,412.25</dd></div>
+        <div><dt>Unrealised P/L</dt><dd class="up">+1,113.25</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 class="rise">Performance</h2>
+      <p class="prose rise d1">Portfolio value against the KSE-100, both indexed to 100 at the first session in the ledger. Hairline grid, no area fill, no gradient.</p>
+      <figure class="chart rise d2" style="margin:24px 0 0">
+        <svg viewBox="0 0 900 220" width="100%" height="220" role="img"
+             aria-label="Portfolio value and KSE-100, both indexed to 100 at the first session over eight sessions. Sample data.">
+          <line x1="0" y1="40" x2="900" y2="40" stroke="#14110F1A"/>
+          <line x1="0" y1="90" x2="900" y2="90" stroke="#14110F1A"/>
+          <line x1="0" y1="140" x2="900" y2="140" stroke="#14110F1A"/>
+          <line x1="0" y1="190" x2="900" y2="190" stroke="#14110F1A"/>
+          <polyline fill="none" stroke="#14110F" stroke-width="1.5"
+                    points="0,140 128,129 257,146 385,113 514,93 642,85 771,70 900,62"/>
+          <polyline fill="none" stroke="#C2211B" stroke-width="1.5"
+                    points="0,140 128,105 257,120 385,68 514,55 642,38 771,25 900,25"/>
+        </svg>
+      </figure>
+      <p class="rise d3" style="margin-top:14px;font-size:13px">
+        <span style="display:inline-block;width:18px;height:2px;background:#C2211B;vertical-align:middle;margin-right:8px"></span>FINTRA book
+        &nbsp;&nbsp;<span style="display:inline-block;width:18px;height:2px;background:#14110F;vertical-align:middle;margin-right:8px"></span>KSE-100
+      </p>
+      <p class="rise d3" style="font-size:13px;color:var(--muted)">Fewer than five sessions of history: this block is replaced by one sentence saying so, never by an empty axis.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 class="rise">Holdings</h2>
+      <table class="tbl rise d1">
+        <caption>Snapshot 14:32 PKT, 18 Sep 2026 · sorted by value</caption>
+        <thead>
+          <tr><th scope="col">Symbol</th><th scope="col">Qty</th><th scope="col">Avg cost</th><th scope="col">Last</th>
+              <th scope="col" class="num">Value</th><th scope="col" class="num">Unrealised</th><th scope="col" class="num">% of book</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">OGDC <span style="color:var(--muted);font-weight:400">Oil &amp; Gas Development</span></th>
+              <td class="num">40</td><td class="num">210.10</td><td class="num">218.45</td>
+              <td class="num">8,738.00</td><td class="num up">+334.00</td><td class="num">20.6</td></tr>
+          <tr><th scope="row">PPL <span style="color:var(--muted);font-weight:400">Pakistan Petroleum</span></th>
+              <td class="num">60</td><td class="num">145.60</td><td class="num">151.30</td>
+              <td class="num">9,078.00</td><td class="num up">+342.00</td><td class="num">21.4</td></tr>
+          <tr><th scope="row">PSO <span style="color:var(--muted);font-weight:400">Pakistan State Oil</span></th>
+              <td class="num">35</td><td class="num">320.40</td><td class="num">312.75</td>
+              <td class="num">10,946.25</td><td class="num down">-267.75</td><td class="num">25.8</td></tr>
+          <tr><th scope="row">ATRL <span style="color:var(--muted);font-weight:400">Attock Refinery</span></th>
+              <td class="num">25</td><td class="num">415.00</td><td class="num">441.20</td>
+              <td class="num">11,030.00</td><td class="num up">+655.00</td><td class="num">26.0</td></tr>
+          <tr><th scope="row">MZNPETF <span style="color:var(--muted);font-weight:400">Meezan Pakistan ETF</span></th>
+              <td class="num">200</td><td class="num">12.85</td><td class="num">13.10</td>
+              <td class="num">2,620.00</td><td class="num up">+50.00</td><td class="num">6.2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 class="rise">Ledger</h2>
+      <p class="prose rise d1">Append only. A mistake is corrected by a reversing trade, never by an edit, and both rows stay visible. Positions and cash are derived from this list on every read, never stored.</p>
+      <table class="tbl rise d2">
+        <caption>Latest 6 of 21 trades</caption>
+        <thead>
+          <tr><th scope="col">Date</th><th scope="col">Side</th><th scope="col">Symbol</th><th scope="col" class="num">Qty</th>
+              <th scope="col" class="num">Price</th><th scope="col">Traded by</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="d">2026-09-18</td><td>BUY</td><th scope="row">OGDC</th><td class="num">40</td><td class="num">210.10</td><td>A. Member</td></tr>
+          <tr><td class="d">2026-09-15</td><td>SELL</td><th scope="row">PSO</th><td class="num">15</td><td class="num">318.90</td><td>B. Member</td></tr>
+          <tr><td class="d">2026-09-11</td><td>BUY</td><th scope="row">ATRL</th><td class="num">25</td><td class="num">415.00</td><td>C. Member</td></tr>
+          <tr><td class="d">2026-09-08</td><td>BUY</td><th scope="row">MZNPETF</th><td class="num">200</td><td class="num">12.85</td><td>A. Member</td></tr>
+          <tr><td class="d">2026-09-04</td><td>BUY</td><th scope="row">PPL</th><td class="num">60</td><td class="num">145.60</td><td>B. Member</td></tr>
+          <tr><td class="d">2026-09-01</td><td>BUY</td><th scope="row">PSO</th><td class="num">50</td><td class="num">320.40</td><td>C. Member</td></tr>
+        </tbody>
+      </table>
+      <p class="rise" style="margin-top:20px;font-size:13px">Paging at 25 rows, plain <span class="mono">Older</span> and <span class="mono">Newer</span> links. No leaderboards, no badges, no confetti. It is a book, not a game.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 class="rise">Method</h2>
+      <ul class="notes">
+        <li>Started 12 January 2026 with a fixed starting balance held in Worker config, not in the database.</li>
+        <li>Whole shares only. No fractional positions, no leverage, no shorting.</li>
+        <li>Prices are PSX snapshots written to KV every 15 minutes during session hours, not live ticks. A trade prices at the stored snapshot price and stores that <span class="mono">as_of</span>.</li>
+        <li>Benchmark is the KSE-100 daily series. The portfolio tracks PSX instruments only.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">FINTRA · LUMS · demo build. Not shown here: the stale snapshot banner (older than 24 hours), the empty book, and the sub five session chart.</div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>

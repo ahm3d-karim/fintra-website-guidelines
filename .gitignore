@@ -1,0 +1,19 @@
+# Local only. The earlier single page draft and personal notes; not part of the pack.
+# Leading slashes matter: a bare `index.html` would also ignore docs/demo/index.html.
+/NOTES.md
+/index.html
+/minimal.html
+/css/
+/js/
+/data/
+/.commandcode/
+
+# The clip ships as hero.mp4. The .webm alternate is built by the same ffmpeg command
+# (see docs/01-DESIGN-SYSTEM.md) and is not committed; nothing references it.
+docs/demo/hero.webm
+
+# Editor and OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp

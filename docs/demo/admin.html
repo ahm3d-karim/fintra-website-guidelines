@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — FINTRA</title>
+<link rel="stylesheet" href="site.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <nav class="wrap">
+    <a class="brand" href="index.html">FINTRA</a>
+    <a href="admin.html" aria-current="page">Admin</a>
+    <a href="index.html">Site</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow rise">Executive Council · behind Cloudflare Access, no login of our own</p>
+      <h1 class="rise" style="max-width:12ch">Console</h1>
+      <p class="lede rise d1" style="margin-top:22px">Four jobs: file a trade, read the book, read applications, publish research.</p>
+      <p class="notice rise d2" style="margin-top:30px">Demo console. Nothing writes; the trade below previews against a hardcoded snapshot. Add <span class="mono">?stale=1</span> to the URL to see the stale snapshot state that blocks filing.</p>
+      <nav class="filters rise d3" aria-label="Console sections">
+        <a href="#ticket">Trade ticket</a>
+        <a href="#book">Book</a>
+        <a href="#apps">Applications</a>
+        <a href="#publish">Research</a>
+      </nav>
+    </div>
+  </section>
+
+  <section id="ticket">
+    <div class="wrap">
+      <h2 class="rise">Trade ticket</h2>
+
+      <div id="stale-banner" hidden class="notice stale">
+        <h3>Snapshot is stale</h3>
+        <p>The last stored price is <span class="mono">14:32 PKT, 18 Sep 2026</span>, more than 24 hours old. Filing is disabled until the fetch succeeds, because a trade priced off a stale snapshot is worse than no trade. <a href="admin.html">Refresh</a></p>
+      </div>
+
+      <form id="ticket" novalidate>
+        <div class="field">
+          <label for="symbol">Symbol</label>
+          <input id="symbol" name="symbol" type="text" list="symbols" autocomplete="off" placeholder="OGDC">
+          <datalist id="symbols">
+            <option value="OGDC"></option><option value="PPL"></option><option value="PSO"></option>
+            <option value="POL"></option><option value="APL"></option><option value="ATRL"></option>
+            <option value="MZNPETF"></option><option value="LUCK"></option><option value="ENGRO"></option>
+          </datalist>
+          <p class="hint">Sample allowlist. The built console reads the tradeable universe from one file, and rejects a symbol that is not in it.</p>
+        </div>
+
+        <div class="field">
+          <label for="side">Side</label>
+          <select id="side" name="side">
+            <option>BUY</option>
+            <option>SELL</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="qty">Quantity</label>
+          <input id="qty" name="qty" type="number" min="1" step="1" inputmode="numeric" value="40">
+          <p class="hint">Whole shares only. Held: <span class="mono" id="held">–</span></p>
+        </div>
+
+        <p class="mono" id="preview" role="status" aria-live="polite" style="margin:0 0 6px;font-size:15px;color:var(--ink)">–</p>
+        <p class="hint" id="reason" style="margin:0 0 22px"></p>
+
+        <button type="submit" id="confirm" aria-disabled="true" disabled>Confirm trade</button>
+        <p class="hint" style="margin-top:14px">Trades are append only. A wrong entry is corrected by a reversing row that says why, never by an edit.</p>
+      </form>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="wrap">
+      <h2 class="rise">Book</h2>
+      <dl class="kpi rise d1">
+        <div><dt>Total value</dt><dd>83,674.25</dd></div>
+        <div><dt>Cash</dt><dd>41,262.00</dd></div>
+        <div><dt>Unrealised P/L</dt><dd class="up">+1,113.25</dd></div>
+        <div><dt>Snapshot</dt><dd style="font-size:16px">14:32 PKT</dd></div>
+      </dl>
+      <table class="tbl rise d2">
+        <caption>Holdings, excerpt · the public page shows the same file</caption>
+        <thead>
+          <tr><th scope="col">Symbol</th><th scope="col" class="num">Qty</th><th scope="col" class="num">Last</th>
+              <th scope="col" class="num">Value</th><th scope="col" class="num">% of book</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">OGDC</th><td class="num">40</td><td class="num">218.45</td><td class="num">8,738.00</td><td class="num">20.6</td></tr>
+          <tr><th scope="row">PSO</th><td class="num">35</td><td class="num">312.75</td><td class="num">10,946.25</td><td class="num">25.8</td></tr>
+          <tr><th scope="row">ATRL</th><td class="num">25</td><td class="num">441.20</td><td class="num">11,030.00</td><td class="num">26.0</td></tr>
+        </tbody>
+      </table>
+      <table class="tbl rise d3">
+        <caption>Ledger, latest 3</caption>
+        <thead>
+          <tr><th scope="col">Date</th><th scope="col">Side</th><th scope="col">Symbol</th><th scope="col" class="num">Qty</th>
+              <th scope="col" class="num">Price</th><th scope="col">By</th><th scope="col">Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="d">2026-09-18</td><td>BUY</td><th scope="row">OGDC</th><td class="num">40</td><td class="num">210.10</td><td>A. Member</td><td><a href="#ticket">Reverse</a></td></tr>
+          <tr><td class="d">2026-09-15</td><td>SELL</td><th scope="row">PSO</th><td class="num">15</td><td class="num">318.90</td><td>B. Member</td><td><a href="#ticket">Reverse</a></td></tr>
+          <tr><td class="d">2026-09-11</td><td>BUY</td><th scope="row">ATRL</th><td class="num">25</td><td class="num">415.00</td><td>C. Member</td><td><a href="#ticket">Reverse</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="apps">
+    <div class="wrap">
+      <h2 class="rise">Applications</h2>
+      <p class="prose rise d1">Read, mark, export. Contacts are masked in the list and revealed one at a time, so a shared screen in the EC office does not leak forty phone numbers.</p>
+      <table class="tbl rise d2">
+        <caption>Intake 2026 to 2027 · 3 of 41</caption>
+        <thead>
+          <tr><th scope="col">Filed</th><th scope="col">Name</th><th scope="col">Email</th><th scope="col">First choice</th><th scope="col">State</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="d">2026-09-18</td><th scope="row">Full name</th><td class="mono">a•••@lums.edu.pk</td><td>Research</td><td>New</td></tr>
+          <tr><td class="d">2026-09-18</td><th scope="row">Full name</th><td class="mono">b•••@lums.edu.pk</td><td>Marketing &amp; Outreach</td><td>Shortlisted</td></tr>
+          <tr><td class="d">2026-09-17</td><th scope="row">Full name</th><td class="mono">c•••@lums.edu.pk</td><td>Competitions</td><td>Declined</td></tr>
+        </tbody>
+      </table>
+      <p class="rise d3" style="margin-top:20px"><span style="color:var(--muted)">Export CSV · <span class="mono">link pending</span></span> · exported at the end of the intake, then deleted one month after the term starts.</p>
+    </div>
+  </section>
+
+  <section id="publish">
+    <div class="wrap">
+      <h2 class="rise">Publish research</h2>
+      <form data-demo novalidate>
+        <div class="field">
+          <label for="title">Title</label>
+          <input id="title" name="title" type="text" placeholder="Coal costs and cement margins">
+        </div>
+        <div class="field">
+          <label for="slug">URL</label>
+          <input id="slug" name="slug" type="text" placeholder="coal-costs-cement-margins">
+          <p class="hint">Lowercase, hyphens, no dates. A slug is permanent: fixing a typo in it breaks every link already shared.</p>
+        </div>
+        <div class="field">
+          <label for="topic">Topic</label>
+          <select id="topic" name="topic">
+            <option>Energy</option><option>Macro</option><option>Markets</option><option>Sectors</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="pdf">PDF</label>
+          <input id="pdf" name="pdf" type="file" accept="application/pdf">
+          <p class="hint">Uploaded to R2 first, then the row is written. A row without a file returns 404, so the write order matters.</p>
+        </div>
+        <div class="field inline">
+          <input id="live" name="live" type="checkbox">
+          <label for="live" style="margin:0">Publish on save</label>
+        </div>
+        <button type="submit">Save piece</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">FINTRA · LUMS · demo build. Every console route re-checks the Access identity server side, not just at the door. Placeholder link: Export CSV.</div>
+</footer>
+
+<script src="site.js"></script>
+<script>
+// Demo only: preview a ticket against a hardcoded snapshot. The built console prices from the stored snapshot.
+const SNAP = { as_of:'14:32 PKT, 18 Sep 2026', cash:41262, stale:new URLSearchParams(location.search).has('stale'),
+  prices:{OGDC:218.45,PPL:151.30,PSO:312.75,POL:512.00,APL:398.60,ATRL:441.20,MZNPETF:13.10,LUCK:1015.00,ENGRO:298.40},
+  held:{OGDC:40,PPL:60,PSO:35,ATRL:25,MZNPETF:200} };
+const $ = id => document.getElementById(id);
+const money = n => n.toLocaleString('en-PK',{minimumFractionDigits:2,maximumFractionDigits:2});
+if (SNAP.stale) $('stale-banner').hidden = false;
+const price = s => SNAP.prices[s] || 0, heldQty = s => SNAP.held[s] || 0;
+
+function paintTicket(){
+  const s = $('symbol').value.trim().toUpperCase(), side = $('side').value;
+  const qty = Math.max(0, Math.floor(Number($('qty').value) || 0));
+  $('held').textContent = s && price(s) ? heldQty(s) + ' shares' : 'no position';
+  const valid = !!price(s) && qty > 0 && !SNAP.stale;
+  const cost = qty * price(s), cash = side === 'BUY' ? SNAP.cash - cost : SNAP.cash + cost;
+  const short = side === 'SELL' && qty > heldQty(s);
+  const broke = side === 'BUY' && cost > SNAP.cash;
+  const ok = valid && !short && !broke;
+  $('preview').textContent = price(s)
+    ? `${side} ${qty} ${s} at ${money(price(s))} = PKR ${money(cost)} · cash after PKR ${money(cash)}`
+    : 'Pick a symbol from the allowlist.';
+  $('reason').textContent = SNAP.stale ? 'Blocked: snapshot is stale.'
+    : !price(s) ? 'Blocked: symbol is not in the allowlist.'
+    : qty < 1 ? 'Blocked: quantity must be at least one share.'
+    : short ? `Blocked: only ${heldQty(s)} shares held.`
+    : broke ? 'Blocked: not enough cash for this buy.'
+    : `Snapshot ${SNAP.as_of}. Filing writes the ledger row and the snapshot timestamp together.`;
+  $('confirm').disabled = !ok;
+  $('confirm').setAttribute('aria-disabled', String(!ok));
+}
+document.getElementById('ticket').addEventListener('input', paintTicket);
+document.getElementById('ticket').addEventListener('submit', e => { e.preventDefault(); paintTicket(); });
+paintTicket();
+</script>
+</body>
+</html>

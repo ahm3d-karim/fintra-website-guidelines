@@ -1,0 +1,220 @@
+/* site.css — shared shell for the FINTRA demo pages.
+   Tokens and rules are the contract in 01-DESIGN-SYSTEM.md. Change them there first.
+
+   Two colours, and nothing else: paper (a neutral, so it does not count toward the palette)
+   and one red. FINTRA's red is sampled from the society logo: the deep reds in it average
+   #C02B20, and the cleanest samples run to #D81C0C. --red is #C2211B, the midpoint, which
+   holds 5.7:1 on paper for links and labels.
+
+   Why the clip is grayscale and multiplied: a colour clip on a paper page would put a third
+   and fourth colour on screen and break the palette. Desaturating it and multiplying it into
+   the paper leaves a grey moving texture carrying the same ink as the text, so red stays the
+   only colour on the page. That is the whole reason for both lines.
+
+   Type: the system stack, no web font. The identity here is the composition and the red rule,
+   not a licence, and a local stack paints with no network request. */
+
+:root{
+  /* neutral base, does not count toward the two colour palette */
+  --field:#FFFFFF;          /* page */
+  --band:#F7F4F0;           /* alternating band, a warm neutral */
+  --ink:#14110F;
+  --muted:#6B6560;          /* 5.4:1 on paper */
+  --line:rgba(20,17,15,.12);        /* decorative division only */
+  --line-strong:#8A8480;    /* 3.7:1: input and button boundaries, where the edge carries meaning */
+
+  /* the one colour */
+  --red:#C2211B;            /* 5.7:1 on paper */
+  --red-ink:#FFFFFF;
+
+  --gutter:clamp(24px,8.5vw,108px); --col:966px; --prose:640px;
+  --pad:clamp(96px,13vw,180px);   /* the negative space is the layout: more of it than feels necessary */
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --up:var(--ink);          /* gains in ink, losses in red: two colours, and the finance convention */
+  --down:var(--red);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--field);color:var(--ink);
+     font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+
+/* the clip: fixed for the whole document on the home page only, never in the flow */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--field)}
+.bg video{width:100%;height:100%;object-fit:cover;display:block;opacity:.5;
+  mix-blend-mode:multiply;filter:grayscale(1) contrast(1.05)}
+
+main{position:relative;z-index:1;padding-top:var(--hdr,0px)}
+section{padding:var(--pad) 0;border-top:1px solid var(--line);background:rgba(255,255,255,.92)}
+section.band{background:transparent;border-top:0}
+/* the hero wash. Measured, not guessed: at .62 the darkest 1 percent of the hero backdrop sat at
+   rgb(221,221,221), which leaves the muted body text at 4.23:1. At .72 that floor is rgb(230,230,230)
+   and muted clears 4.5:1 while the clip still shows through at roughly a fifth of its strength. */
+section.hero{border-top:0;background:rgba(255,255,255,.72)}
+section.hero{min-height:calc(100vh - var(--hdr,0px));display:grid;align-content:center;padding:0}
+.wrap{max-width:var(--col);margin:0 auto;padding:0 var(--gutter)}
+.prose{max-width:var(--prose)}
+
+h1{margin:0;font-size:clamp(40px,8vw,104px);line-height:.95;letter-spacing:-.025em;font-weight:500;
+   max-width:16ch;text-transform:uppercase}
+h2{margin:0 0 12px;font-size:clamp(24px,3vw,40px);line-height:1.12;letter-spacing:-.015em;font-weight:500}
+h3{margin:0 0 6px;font-size:18px;line-height:1.3;letter-spacing:-.01em;font-weight:500}
+p{margin:0 0 16px;max-width:52ch;color:var(--muted)}
+.lede{font-size:clamp(18px,1.6vw,21px);line-height:1.55;color:var(--ink);max-width:40ch}
+.eyebrow{margin:0 0 16px;font-size:12px;line-height:1.4;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+a{color:var(--red);text-decoration:none;border-bottom:1px solid currentColor}
+h2 a,h3 a{color:inherit;border-bottom:1px solid transparent}
+h2 a:hover,h3 a:hover{border-color:currentColor}
+
+/* the identity motif: every section opening is centred, and every centred h2 carries the same
+   short red rule under it. One gesture, repeated, so the site reads as one site. */
+.wrap > .eyebrow,.wrap > h1,.wrap > h2,.wrap > .lede{text-align:center;margin-inline:auto}
+.wrap > h2::after{content:"";display:block;width:56px;height:2px;background:var(--red);margin:20px auto 0}
+.wrap > h2 + p{margin-inline:auto;text-align:center;max-width:var(--prose)}
+
+.skip{position:absolute;left:-9999px}
+.skip:focus{position:fixed;left:var(--gutter);top:12px;z-index:9;background:var(--field);color:var(--ink);
+            padding:10px 14px;border:1px solid var(--line-strong)}
+
+/* header: transparent over the top of the page, solid once content moves under it. */
+header.site{position:fixed;left:0;right:0;top:0;z-index:5;background:transparent;border-bottom:1px solid transparent;
+  transition:background-color .35s ease,border-color .35s ease}
+header.site.solid{background:rgba(255,255,255,.94);border-bottom-color:var(--line)}
+/* At the top the bar sits on the clip. Ink links over the paper wash hold 6.9:1 against the
+   clip's darkest frame at full strength, the floor no footage can beat. */
+header.site:not(.solid){background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,255,255,0))}
+header.site:not(.solid) nav a,header.site:not(.solid) nav a:last-child{color:var(--ink)}
+header.site nav{display:flex;flex-wrap:wrap;gap:24px;align-items:baseline;padding:18px 0}
+.brand{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);border:0}
+header.site nav a{font-size:14px;color:var(--muted);border:0;border-bottom:1px solid transparent;padding-bottom:2px}
+header.site nav a:hover,header.site nav a[aria-current]{color:var(--ink);border-bottom-color:var(--red)}
+header.site nav a:last-child{margin-left:auto;color:var(--red)}
+footer{border-top:1px solid var(--line);padding:64px 0;color:var(--muted);font-size:14px}
+footer .wrap{text-align:center;max-width:var(--prose)}
+
+/* department cards: white on paper, one hairline, no shadow. The card is not elevated, it is ruled. */
+.grid{display:grid;gap:1px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:32px 0 0;
+      background:var(--line);border:1px solid var(--line)}
+.card{background:var(--field);border:0;padding:26px 28px;margin:0}
+details.card>summary{list-style:none;cursor:pointer;border:0;display:flex;gap:16px;align-items:flex-start}
+details.card>summary::-webkit-details-marker{display:none}
+.card__top{display:flex;gap:16px;align-items:flex-start}
+.card__top>div:last-child{flex:1 1 auto;min-width:0}
+.dept{margin-top:56px}
+.dept__head{display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;
+  padding-bottom:10px;border-bottom:1px solid var(--line)}
+.dept__meta{margin:0;font-size:13px;color:var(--muted);font-family:var(--mono)}
+.card h3{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.card__role{font-size:13px;color:var(--muted);white-space:nowrap}
+.card__year{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.card__remit{margin:10px 0 0;font-size:14px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card__body{margin-top:18px;padding-top:20px;border-top:1px solid var(--line)}
+.card__quote{margin:0 0 14px;font-size:19px;line-height:1.45;color:var(--ink)}
+.card__creds{margin:0 0 14px;padding-left:18px;font-size:14px;color:var(--muted)}
+.card__creds li{margin-bottom:4px}
+.tile{flex:0 0 auto;width:56px;height:56px;display:grid;place-items:center;background:var(--band);
+      border:1px solid var(--line);font-family:var(--mono);font-size:14px;color:var(--muted)}
+/* native disclosure transition where the platform supports it, instant elsewhere */
+@supports selector(::details-content){
+  .card::details-content{content-visibility:hidden;opacity:0;
+    transition:content-visibility .16s allow-discrete,opacity .16s ease-out}
+  .card[open]::details-content{content-visibility:visible;opacity:1}
+}
+
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.up,td.up{color:var(--up)} .down,td.down{color:var(--down)}
+.kpi{display:grid;gap:1px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin:0;
+     background:var(--line);border:1px solid var(--line)}
+.kpi div{background:var(--field);padding:22px 24px}
+.kpi dt{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kpi dd{margin:8px 0 0;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:22px}
+.tape{display:flex;flex-wrap:wrap;gap:1px;margin-top:24px;background:var(--line);border:1px solid var(--line)}
+.tape span{background:var(--field);padding:10px 14px;font-family:var(--mono);font-size:13px}
+.tape b{font-weight:400;color:var(--muted);margin-right:6px}
+table.tbl{width:100%;border-collapse:collapse;margin-top:28px}
+table.tbl caption{padding-bottom:10px;text-align:left;font-size:12px;letter-spacing:.1em;
+                  text-transform:uppercase;color:var(--muted)}
+table.tbl th,table.tbl td{padding:13px 14px 13px 0;text-align:left;vertical-align:baseline;border-bottom:1px solid var(--line)}
+table.tbl th{font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+table.tbl td.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+table.tbl td.d{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+table.tbl tbody tr:hover{background:var(--band)}
+.chart{margin-top:28px;border:1px solid var(--line);background:var(--field)}
+.notice{margin:0 0 24px;padding:18px 22px;border-left:2px solid var(--red);background:var(--band);
+        color:var(--ink);font-size:14px;max-width:var(--prose)}
+.notice.stale{border-left-color:var(--line-strong)}
+.notice h3{font-size:16px;margin-bottom:4px}
+.notice p{color:var(--muted);margin:0}
+ul.notes{padding-left:18px;font-size:14px;color:var(--muted);max-width:var(--prose)}
+.cite{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);max-width:var(--prose)}
+
+/* form */
+form{max-width:var(--prose);margin-top:28px}
+fieldset{margin:0 0 8px;padding:0;border:0}
+legend{padding:0 0 14px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.field{margin:0 0 24px}
+.field label{display:block;margin-bottom:6px;font-size:14px;color:var(--ink)}
+.field .hint,.field .err{margin:6px 0 0;font-size:13px}
+.field .hint{color:var(--muted)}
+.field .err{color:var(--red)}
+.count{float:right;font-family:var(--mono);font-size:12px;color:var(--muted)}
+input,select,textarea{width:100%;min-height:44px;padding:11px 12px;font:inherit;color:var(--ink);
+  background:var(--field);border:1px solid var(--line-strong);border-radius:2px}
+textarea{min-height:120px;resize:vertical}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--red)}
+.inline{display:flex;gap:10px;align-items:flex-start}
+.inline input{width:auto;min-height:0;margin-top:4px}
+button{min-height:44px;padding:13px 22px;font:inherit;color:var(--red-ink);background:var(--red);
+  border:1px solid var(--red);border-radius:2px;cursor:pointer}
+button[aria-disabled=true]{color:var(--muted);background:transparent;border-color:var(--line-strong);cursor:not-allowed}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* application page: one centred card, header centred, fields left so labels stay flush with the
+   inputs. Same skeleton as the LRS application page, wearing this site's tokens. */
+.app{padding:var(--pad) var(--gutter)}
+.app__card{position:relative;max-width:560px;margin:0 auto;
+  padding:clamp(34px,6vw,58px) clamp(22px,5vw,48px);border:1px solid var(--line-strong);background:var(--field)}
+.app__card::before{content:"";position:absolute;inset:8px;border:1px solid var(--line);pointer-events:none}
+.app__head{text-align:center}
+.kicker{margin:0 0 18px;padding-left:.3em;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
+.app__head h1{margin:0 auto 18px;max-width:24ch;font-size:clamp(30px,5vw,44px);line-height:1.05}
+.app__head .lede{margin:14px auto 0;max-width:46ch;color:var(--ink)}
+.app__head p{color:var(--muted)}
+.app__head p.kicker{color:var(--red)}   /* the p rule above is more specific than .kicker alone */
+.divider{display:flex;align-items:center;justify-content:center;gap:16px;margin:32px auto;max-width:220px}
+.divider::before,.divider::after{content:"";height:1px;flex:1;background:var(--line-strong)}
+.divider i{width:56px;height:2px;background:var(--red)}
+.app form{max-width:none;margin-top:0}
+.app fieldset{margin-bottom:14px}
+.lnkrow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;padding:14px 24px;border:1px solid var(--red);border-radius:2px;
+  background:var(--red);color:var(--red-ink);font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.btn--ghost{background:transparent;color:var(--red);border-color:var(--line-strong)}
+.btn--ghost:hover{border-color:var(--red)}
+.app__note{margin:20px 0 0;text-align:center;font-size:13px;color:var(--muted)}
+
+/* department card expansion. ::details-content with interpolate-size animates the real height,
+   so there is no measuring script and no max-height guess. A browser without the pair opens the
+   card instantly, which is what a <details> does anyway. */
+:root{interpolate-size:allow-keywords}
+.card::details-content{block-size:0;opacity:0;overflow:clip;content-visibility:hidden;
+  transition:block-size .16s ease-out,opacity .16s ease-out,content-visibility .16s allow-discrete}
+.card[open]::details-content{block-size:auto;opacity:1;content-visibility:visible}
+
+/* one shot staggered reveal. The only entrance motion on the site. */
+.js .rise{opacity:0;transform:translateY(12px)}
+.js .rise.in{opacity:1;transform:none;
+  transition:opacity .5s ease-out var(--d,0s),transform .5s ease-out var(--d,0s)}
+.rise.d1{--d:.06s} .rise.d2{--d:.12s} .rise.d3{--d:.18s}
+@media (prefers-reduced-motion: reduce){
+  .js .rise{opacity:1;transform:none}
+  *,.card::details-content{transition-duration:.01ms !important;animation-duration:.01ms !important}
+  header.site{transition:none}
+}
+.debug{position:fixed;right:16px;bottom:16px;z-index:9;padding:8px 10px;font:12px/1.4 var(--mono);
+       color:var(--muted);background:var(--field);border:1px solid var(--line)}
+
+@media (max-width:640px){
+  table.tbl thead{display:none}
+  table.tbl tr{display:block;padding:12px 0;border-bottom:1px solid var(--line)}
+  table.tbl td{display:block;padding:2px 0;border:0}
+  table.tbl td.num{text-align:left}
+}

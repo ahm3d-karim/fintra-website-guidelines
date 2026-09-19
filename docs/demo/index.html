@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FINTRA — LUMS finance society</title>
+<link rel="stylesheet" href="site.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <nav class="wrap">
+    <a class="brand" href="index.html">FINTRA</a>
+    <a href="departments.html">Departments</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="research.html">Research</a>
+    <a href="apply.html">Apply for GB</a>
+  </nav>
+</header>
+
+<!-- THE VIDEO: fixed for the whole document, behind everything, never in the flow.
+     Home only. Adding it to another page is this block plus the scrub block in site.js. -->
+<div class="bg">
+  <video data-scrub muted playsinline preload="metadata" poster="hero-poster.jpg">
+    <source src="hero.mp4" type="video/mp4">
+  </video>
+</div>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap">
+      <h1 class="rise">Pakistan's largest student-run finance club</h1>
+      <p class="lede rise d1" style="margin-top:24px">Competitions, research, a live virtual PSX portfolio, and the departments that run them.</p>
+      <p class="rise d2" style="margin-top:28px"><a href="apply.html">Apply for General Body</a></p>
+    </div>
+  </section>
+
+  <section id="what">
+    <div class="wrap">
+      <p class="eyebrow rise">Who we are</p>
+      <h2 class="rise">What FINTRA is</h2>
+      <p class="prose rise d1">Forty to seventy words, in the society's own words, on what it is and what it stands for. Written by the EC, not by a copywriter, and reviewed once a term so it still describes the club that exists.</p>
+    </div>
+  </section>
+
+  <section id="does">
+    <div class="wrap">
+      <p class="eyebrow rise">What we do</p>
+      <h2 class="rise">Four things, all year</h2>
+      <table class="tbl rise d1">
+        <caption>Each line links to where it lives</caption>
+        <tbody>
+          <tr><th scope="row">Competitions</th><td>Case and trading competitions, internal and inter university.</td><td style="color:var(--muted)">Calendar · <span class="mono">link pending</span></td></tr>
+          <tr><th scope="row">Research</th><td>Sector and macro write ups, published as PDFs you can cite.</td><td><a href="research.html">Read</a></td></tr>
+          <tr><th scope="row">Portfolio</th><td>A virtual PSX book, priced from exchange snapshots, ledger public.</td><td><a href="portfolio.html">Open</a></td></tr>
+          <tr><th scope="row">Departments</th><td>EC, Marketing and Outreach, and the people who run them.</td><td><a href="departments.html">Meet</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <p class="rise">The clip is allowed through here, where there is nothing to read.</p>
+    </div>
+  </section>
+
+  <section id="join">
+    <div class="wrap">
+      <p class="eyebrow rise">Join</p>
+      <h2 class="rise">General Body applications</h2>
+      <p class="prose rise d1">One page, ten fields, and a decision inside the week. Nothing you write is published, and the deadline is a date, not a countdown.</p>
+      <p class="rise d2"><a href="apply.html">Apply now</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">FINTRA · LUMS · demo build. Scroll drives the clip, first screen to last. Labelled placeholders: Calendar, Work done, Export CSV.</div>
+</footer>
+
+<div class="debug" id="debug">–</div>
+
+<script src="site.js"></script>
+<script>
+// site.js, scrub block: one fixed background video, driven by document scroll fraction
+const v = document.querySelector('[data-scrub]');
+if (v && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let target = 0, t = 0, raf = 0, queued = false;
+  const progress = () => {                        // 0 at the top of the document, 1 at the bottom
+    const max = document.documentElement.scrollHeight - innerHeight;
+    return max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+  };
+  // ease the seek over roughly 150ms so one wheel notch reads as a fast glide, not a cut
+  const tick = () => {
+    t += (target - t) * 0.18;
+    if (Math.abs(target - t) < 0.01) t = target;
+    if (v.readyState >= 2) v.currentTime = t;
+    const d = document.getElementById('debug');
+    if (d) d.textContent = 'doc p=' + progress().toFixed(3) + ' now=' + t.toFixed(2) +
+      ' target=' + target.toFixed(2) + ' y=' + Math.round(scrollY) + '/' +
+      Math.round(document.documentElement.scrollHeight - innerHeight);
+    raf = Math.abs(target - t) > 0.01 ? requestAnimationFrame(tick) : 0;
+  };
+  const paint = () => {
+    queued = false;
+    if (v.readyState >= 2 && v.duration) {
+      target = progress() * (v.duration - 0.05);
+      if (!raf) { t = v.currentTime; raf = requestAnimationFrame(tick); }
+    }
+    const d = document.getElementById('debug');
+    if (d) d.textContent = 'doc p=' + progress().toFixed(3) + ' now=' + v.currentTime.toFixed(2) +
+      ' target=' + target.toFixed(2) + ' y=' + Math.round(scrollY) + '/' + Math.round(document.documentElement.scrollHeight - innerHeight);
+  };
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(paint); } }, { passive: true });
+  addEventListener('resize', paint);
+  v.addEventListener('loadeddata', paint);
+  paint();
+}
+</script>
+</body>
+</html>
