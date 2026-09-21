@@ -100,3 +100,36 @@ Card expansion 160ms, hover colour transitions 120ms, and the shared `.rise` sta
 4. At 390px the grid is one column with 20px side padding, and names never overflow their line.
 5. No card shows an empty quote block, an empty credentials list, or `undefined`.
 6. Adding a sixth department requires editing only the data file. If it needs a code change, the model is wrong.
+
+## Built
+
+Four files, two of them shared:
+
+```
+departments.html          shell: page head, title, lede, the notice slot, the roster container
+data/departments.js       window.FINTRA_DEPARTMENTS, the roster
+render-departments.js     builds every department and every card from the roster
+site.css, site.js         shared with the other six pages, untouched
+```
+
+Load order is the data file, then the renderer, then `site.js`, which wires the cards and collects the `.rise` blocks once they exist. Nothing is typed as markup, so criterion 6 holds: a department, a person or a quote is a data edit.
+
+Member fields as built: `name`, `role`, `year`, `remit` (one line, truncated by CSS), `profile`, `quote`, `credentials`, `jd`, and the optional `work` and `photo`. A missing field renders nothing at all, so no card can show an empty quote mark, an empty list or `undefined`. `work` is a link, a label with a visible pending marker, or absent, in which case the line does not exist. `photo` is a square repo file; without it the card shows the initials monogram, which is also the fallback if the file fails.
+
+`placeholder: true` on any entry makes the page print the placeholder notice, and the notice removes itself once the flags are gone. `?empty=1` renders every department with its description and the pending line instead of a grid, the way `?closed=1` works on the application page. With JavaScript off the roster container carries one sentence saying the roster needs JavaScript; the rest of the page still reads.
+
+### Three places this document loses to the shell
+
+1. **Card columns.** This document asks for three columns at 1200px on a 24px gap. The shell's `.grid` is the ruled 1px grid every page shares, with `minmax(260px, 1fr)` inside the 966px content column: desktop lays out two across, 768px two, below that one. The gap is the hairline. Changing either number re-lays-out every page that uses `.grid`, so the shell value stands.
+2. **The 390px gutter.** This document asks for 20px. The design system's `--gutter` token is `clamp(24px, 8.5vw, 108px)`, which measures 33px at 390px. The token wins.
+3. **The collapsed card height.** This document says 220px. The card is a 56px tile plus three lines inside 26px padding, which measures 136px at one column and 159px at two. The height comes off the type scale, not off a number.
+
+Everything else here is what shipped: `<details>` cards, one card open per department, hover expansion on fine pointers only, the `::details-content` height animation, and the sibling stagger capped at `d3`.
+
+## The roster as shipped
+
+Nine departments in the society's order: Executive Council, Human Resources, Marketing, Media, Technology, Executions, Research, Social Responsibility Program, Events. Four placeholder directors each, so the page can be reviewed at full length before real data exists.
+
+To publish it: replace the placeholder text in `data/departments.js` with confirmed names, quotes, credentials and role titles, drop the `placeholder` flags as the text becomes real, and add the square photos at `assets/media/people/<name-slug>.webp`. Nobody is listed without consent, and the department descriptions need sign off before their flags come off.
+
+The list reached this page as `Social Responsibility Program and Events` and was read as two departments. If it is one department, deleting one block from the data file is the whole change.

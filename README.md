@@ -89,6 +89,7 @@ Show every department, its people, and each person's job description.
   hover expansion on fine pointers and keeps one card per department open.
 - The expansion animates the real height with `::details-content` and `interpolate-size`; a browser
   without that pair opens instantly, which is correct behaviour, not a fallback bug.
+- The page is built at load time from `docs/demo/data/departments.js` by `docs/demo/render-departments.js`, so a department or a person is a data edit and never a markup edit. Load order is the data file, then the renderer, then `site.js`, which wires the cards once they exist.
 - Card fields: name, role, year, remit, then personal profile, quote, credentials, job description.
 - Photographs are repo files, never an upload path: 1:1, 800x800, WebP q78, under 120KB at
   `assets/media/people/<name-slug>.webp`, `alt=""`, with an initials monogram as the fallback. No
