@@ -119,6 +119,40 @@ details.card>summary::-webkit-details-marker{display:none}
   .card[open]::details-content{content-visibility:visible;opacity:1}
 }
 
+/* Departments page: one ruled rectangle per department, holding the description and the directors
+   in a single row of compact cards. The header strip carries the same 2px red rule the section
+   heads use, which is where the extra colour on this page comes from. */
+.dept__box{margin-top:32px;border:1px solid var(--line);background:var(--field)}
+.dept__box .dept__head{padding:20px 24px;background:var(--band);border-bottom:2px solid var(--red)}
+.dept__box .dept__head h2{margin:0}
+.dept__body{padding:24px}
+.dept__body > .prose{margin-bottom:0}
+.grid--people{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-top:24px}
+.grid--people .card{padding:18px 20px}
+.grid--people .card__top{flex-direction:column;gap:10px}
+.grid--people .tile{width:40px;height:40px;font-size:12px}
+.grid--people .card h3{font-size:15px}
+.grid--people .card__role{font-size:12px}
+.grid--people .card__year,.grid--people .card__remit{font-size:13px}
+/* the remit is clipped to one line at full width; in a 174px card that leaves three words, so the
+   compact card gets two lines instead of an ellipsis after the first */
+.grid--people .card__remit{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;
+  -webkit-line-clamp:2;line-clamp:2}
+
+/* an opened card takes the whole row: in a 174px column the detail text is 134px wide, which turns
+   one paragraph into a tower. The row reflows instead, and only one card per department is open. */
+.grid--people details.card[open]{grid-column:1/-1}
+.grid--people details.card[open] .card__top{flex-direction:row;align-items:center;gap:16px}
+.grid--people details.card[open] .card__remit{white-space:normal}
+.grid--people details.card[open] .tile{width:56px;height:56px;font-size:14px}
+
+/* Departments footer: the wordmark, the page links on one row, then what is still a placeholder. */
+.foot__row{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;margin:0 0 20px;padding-bottom:20px;
+  border-bottom:1px solid var(--line)}
+.foot__row a{font-size:14px;border:0;color:var(--muted)}
+.foot__row a:hover{color:var(--ink)}
+.foot__note{font-size:13px;margin:0}
+
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .up,td.up{color:var(--up)} .down,td.down{color:var(--down)}
 .kpi{display:grid;gap:1px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin:0;

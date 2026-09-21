@@ -99,58 +99,38 @@
   const department = (d, di) => {
     const members = empty ? [] : (Array.isArray(d.members) ? d.members.filter(Boolean) : []);
     const block = el('div', 'dept');
+    // One rectangle per department: header strip, then the description and the directors inside it.
+    const box = el('div', 'dept__box');
 
     const head = rise(el('div', 'dept__head'), di);
-    const h2 = el('h2', null, d.name);
-    h2.style.margin = '0';
-    head.append(h2);
+    head.append(el('h2', null, d.name));
 
     const roles = new Set(members.map(m => m.role).filter(Boolean));
     const meta = !members.length ? 'Roster pending'
       : roles.size === 1 ? members.length + ' ' + [...roles][0].toLowerCase() + 's'
         : members.length + ' people';
     head.append(el('p', 'dept__meta', [meta, d.since ? 'since ' + d.since : ''].filter(Boolean).join(' \u00b7 ')));
-    block.append(head);
+    box.append(head);
 
-    if (d.jd) {
-      const p = rise(el('p', 'prose', d.jd), 1);
-      p.style.marginTop = '18px';
-      block.append(p);
-    }
+    const body = el('div', 'dept__body');
+    if (d.jd) body.append(rise(el('p', 'prose', d.jd), 1));
 
     if (members.length) {
-      const grid = el('div', 'grid');
+      const grid = el('div', 'grid grid--people');
       members.forEach((m, i) => grid.append(person(m, i)));
-      block.append(grid);
+      body.append(grid);
     } else {
-      const p = rise(el('p', 'prose', PENDING), 1);
-      p.style.marginTop = '18px';
-      block.append(p);
+      body.append(rise(el('p', 'prose', PENDING), 1));
     }
+
+    box.append(body);
+    block.append(box);
     return block;
   };
 
   if (!Array.isArray(data) || !data.length) {
     root.append(el('p', 'prose', NODATA));
     return;
-  }
-
-  // The placeholder notice is data driven, not typed into the page: it disappears on its own once
-  // the file holds a confirmed roster. The counts come off the data, so neither can go stale.
-  const slot = document.getElementById('notice');
-  const people = data.reduce((n, d) => n + (Array.isArray(d.members) ? d.members.length : 0), 0);
-  const flagged = data.reduce((n, d) => n + (Array.isArray(d.members) ? d.members.filter(m => m && m.placeholder).length : 0), 0);
-  const flaggedDepts = data.filter(d => d && d.placeholder).length;
-  const shown = empty ? 0 : people;
-  const flaggedShown = empty ? 0 : flagged;
-  if (slot && (flagged || flaggedDepts)) {
-    const who = !shown ? 'No member is listed yet.'
-      : flaggedShown === shown ? 'The ' + shown + ' people below are placeholder entries'
-        : flaggedShown + ' of the ' + shown + ' people below are placeholder entries';
-    const p = el('p', 'notice');
-    p.append(el('strong', null, 'Placeholder roster. '));
-    p.append(document.createTextNode(who + ' in data/departments.js, standing in for names, quotes and credentials. Department descriptions are proposed wording, not signed off, and nobody appears without consent. Editing that file is the only change needed to publish the real roster.'));
-    slot.append(p);
   }
 
   data.forEach((d, i) => { if (d && d.name) root.append(department(d, i)); });

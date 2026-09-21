@@ -106,23 +106,27 @@ Card expansion 160ms, hover colour transitions 120ms, and the shared `.rise` sta
 Four files, two of them shared:
 
 ```
-departments.html          shell: page head, title, lede, the notice slot, the roster container
+departments.html          shell: page head, title, lede, the roster container, the footer
 data/departments.js       window.FINTRA_DEPARTMENTS, the roster
 render-departments.js     builds every department and every card from the roster
-site.css, site.js         shared with the other six pages, untouched
+site.css, site.js         shared with the other six pages; site.css gains the departments blocks
 ```
 
 Load order is the data file, then the renderer, then `site.js`, which wires the cards and collects the `.rise` blocks once they exist. Nothing is typed as markup, so criterion 6 holds: a department, a person or a quote is a data edit.
 
 Member fields as built: `name`, `role`, `year`, `remit` (one line, truncated by CSS), `profile`, `quote`, `credentials`, `jd`, and the optional `work` and `photo`. A missing field renders nothing at all, so no card can show an empty quote mark, an empty list or `undefined`. `work` is a link, a label with a visible pending marker, or absent, in which case the line does not exist. `photo` is a square repo file; without it the card shows the initials monogram, which is also the fallback if the file fails.
 
-`placeholder: true` on any entry makes the page print the placeholder notice, and the notice removes itself once the flags are gone. `?empty=1` renders every department with its description and the pending line instead of a grid, the way `?closed=1` works on the application page. With JavaScript off the roster container carries one sentence saying the roster needs JavaScript; the rest of the page still reads.
+`placeholder: true` marks an entry whose text is still a stand-in. There is no notice card on the page: a box between the title and the first department pushed the roster below the fold, so the footer carries the placeholder line instead. `?empty=1` renders every department with its description and the pending line instead of a row, the way `?closed=1` works on the application page. With JavaScript off the roster container carries one sentence saying the roster needs JavaScript; the rest of the page still reads.
 
-### Three places this document loses to the shell
+### Layout as built, and where it differs from this document
 
-1. **Card columns.** This document asks for three columns at 1200px on a 24px gap. The shell's `.grid` is the ruled 1px grid every page shares, with `minmax(260px, 1fr)` inside the 966px content column: desktop lays out two across, 768px two, below that one. The gap is the hairline. Changing either number re-lays-out every page that uses `.grid`, so the shell value stands.
+One ruled rectangle per department: a header strip in `--band` with the 2px red rule under it (the same motif the section heads use), then the description, then the directors in a single row of compact cards. An opened card takes the whole row, because a 174px column leaves the detail text 134px wide, which turns one paragraph into a tower.
+
+Measured at 390, 640, 768, 1024 and 1440: four cards across at 1440 and 1024, three at 768, two at 640, one at 390, no horizontal overflow at any of the five. The compact card is 174x225 collapsed at four across and 272x163 at one column. An opened card is 699x392 with a 449px text measure. On a 390px phone an opened card is 567px tall and its last 51px sit below the fold, with `scrollY` unchanged: the reader scrolls, the page does not jump.
+
+1. **The card row.** This document asks for three columns at 1200px on a 24px gap. The row ships four across on the shell's 1px ruled grid, with `minmax(160px, 1fr)`, because the row is on one line by request.
 2. **The 390px gutter.** This document asks for 20px. The design system's `--gutter` token is `clamp(24px, 8.5vw, 108px)`, which measures 33px at 390px. The token wins.
-3. **The collapsed card height.** This document says 220px. The card is a 56px tile plus three lines inside 26px padding, which measures 136px at one column and 159px at two. The height comes off the type scale, not off a number.
+3. **The collapsed card height.** This document says 220px. The compact card is a 40px tile plus three lines inside 18px padding: 225px at four across, 163px at one column. The height comes off the type scale, not off a number.
 
 Everything else here is what shipped: `<details>` cards, one card open per department, hover expansion on fine pointers only, the `::details-content` height animation, and the sibling stagger capped at `d3`.
 
