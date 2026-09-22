@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Departments · FINTRA</title>
+<link rel="stylesheet" href="site.css">
+<script>document.documentElement.classList.add('js')</script>
+<!-- Ledger index styles live on this page only: site.css is shared by the other demos, so a
+     concept that may not ship must not move them. Same tokens, same 2px red rule motif. -->
+<style>
+.ledger{margin-top:32px;border-top:1px solid var(--line)}
+.row.dept{margin:0;border-bottom:1px solid var(--line)}
+.row__sum{display:grid;grid-template-columns:3ch minmax(0,1fr) auto;column-gap:16px;row-gap:2px;
+  align-items:baseline;min-height:44px;padding:14px 8px;cursor:pointer;list-style:none}
+.row__sum::-webkit-details-marker{display:none}
+.row__sum::marker{content:""}
+.row__no{grid-column:1;grid-row:1;font-size:13px;color:var(--red)}
+.row__sum h2{grid-column:2;grid-row:1;margin:0;font-size:clamp(18px,2vw,22px);line-height:1.2}
+.row__meta{grid-column:3;grid-row:1;margin:0;font-size:13px;color:var(--muted);white-space:nowrap}
+.row__owns{grid-column:2;grid-row:2;min-width:0;margin:0;font-size:14px;color:var(--muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row__sum:hover{background:var(--band)}
+/* the open row keeps the box motif: band strip under the 2px red rule */
+.row[open]>.row__sum{background:var(--band);border-bottom:2px solid var(--red)}
+.row .dept__body{padding:20px 8px 28px}
+.row .dept__body>.prose{margin-bottom:0}
+/* native disclosure transition where the platform supports it, instant elsewhere.
+   Same rule shape the person cards use in site.css. */
+@supports selector(::details-content){
+  .row::details-content{block-size:0;opacity:0;overflow:clip;content-visibility:hidden;
+    transition:block-size .16s ease-out,opacity .16s ease-out,content-visibility .16s allow-discrete}
+  .row[open]::details-content{block-size:auto;opacity:1;content-visibility:visible}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <nav class="wrap">
+    <a class="brand" href="index.html">FINTRA</a>
+    <a href="departments.html" aria-current="page">Departments</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="research.html">Research</a>
+    <a href="apply.html">Apply for GB</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow rise">Roster, 2026 to 2027</p>
+      <h1 class="rise" style="max-width:12ch">Departments</h1>
+      <p class="lede rise d1" style="margin-top:22px">Every department in one list: what it owns, and how many run it. Open a row for the description and the directors.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap" id="index">
+      <noscript>
+        <p class="prose">This roster is built from a data file, so it needs JavaScript. The rest of the site reads without it.</p>
+      </noscript>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="eyebrow">FINTRA · LUMS Finance Society</p>
+    <nav class="foot__row">
+      <a href="index.html">Home</a>
+      <a href="departments.html">Departments</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="research.html">Research</a>
+      <a href="apply.html">Apply for GB</a>
+    </nav>
+    <p class="foot__note">Roster, quotes and credentials come from <span class="mono">data/departments.js</span> and are placeholders; the department descriptions are proposed wording. Adding a department or a person is a data edit, not a page. Open this page with <span class="mono">?empty=1</span> for the state before a roster lands, or <span class="mono">#dept-3</span> at a department.</p>
+  </div>
+</footer>
+
+<script src="data/departments.js"></script>
+<script src="render-departments.js"></script>
+<script src="render-departments-v2.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

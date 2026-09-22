@@ -7,7 +7,6 @@
 // (03-DEPARTMENTS.md, acceptance criterion 6).
 (() => {
   const root = document.getElementById('roster');
-  if (!root) return;
 
   const data = window.FINTRA_DEPARTMENTS;
   // ?empty=1 is the state before the roster lands: every department keeps its description and shows
@@ -127,6 +126,11 @@
     block.append(box);
     return block;
   };
+
+  // departments-v2 (the ledger index) has no #roster, so it only reaches this script for the card
+  // builder: export the helpers first, then let the box build below skip itself on that page.
+  window.FINTRA_DEPT = { el, rise, person, monogram };
+  if (!root) return;
 
   if (!Array.isArray(data) || !data.length) {
     root.append(el('p', 'prose', NODATA));

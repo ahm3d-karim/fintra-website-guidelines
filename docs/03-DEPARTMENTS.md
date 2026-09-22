@@ -140,3 +140,20 @@ Nine departments in the society's order: Executive Council, Human Resources, Mar
 To publish it: replace the placeholder text in `data/departments.js` with confirmed names, quotes, credentials and role titles, drop the `placeholder` flags as the text becomes real, and add the square photos at `assets/media/people/<name-slug>.webp`. Nobody is listed without consent, and the department descriptions need sign off before their flags come off.
 
 The list reached this page as `Social Responsibility Program and Events` and was read as two departments. If it is one department, deleting one block from the data file is the whole change.
+
+## The ledger index variant (`departments-v2.html`)
+
+`docs/demo/departments-v2.html` is the same page re-cut as a ruled index: one row per department carrying its number, name, one clamped line of the JD and the head count, with the description and the directors revealed by opening the row. Reason: the box stack makes a reader scroll nine equal blocks to compare departments, while the index puts all nine above the fold at 1440.
+
+- Load order is `data/departments.js`, then `render-departments.js`, then `render-departments-v2.js`, then `site.js`. On this page the first renderer only exports `window.FINTRA_DEPT` (`el`, `rise`, `person`, `monogram`) and skips the box build, because the ledger container is `#index`, not `#roster`. The person card is the same builder, so criterion 6 still holds: a department or a person is a data edit.
+- Each row is `<details class="row dept" name="dept" id="dept-N">`. The `name` attribute closes the other rows natively, so there is no exclusivity script. The `dept` class is what puts the person cards under `site.js`'s one-card-per-department wiring, and `.row.dept` resets the `margin-top: 56px` that class carries. Browsers without `<details name>` (Safari below 17, Chrome below 120) can hold more than one row open; that is the old page's behaviour anyway.
+- No row opens by default (decided 2026-09-22). `#dept-3` opens that row from the fragment, and any other fragment, including the skip link's `#main`, is ignored.
+- The row styles live in a `<style>` block in `departments-v2.html`, not in `site.css`, because `site.css` is shared by the other six demos.
+- Same states as the box page: `?empty=1` for every roster pending, the noscript sentence with JavaScript off, no dead anchors, the initials monogram fallback.
+
+Measured, this variant: no row open on load; opening row 5 closes row 3 (name attribute); Space toggles rows and person cards, Enter toggles rows; tab order from a pristine load is skip link, the five nav links, row 01, with the 2px red ring on each; zero console errors on a fresh target; overflow -15, -15 and 0 at 1440, 768 and 390, including after a hard flick to the bottom, with all 48 `.rise` elements revealed; summary tap target 76x324 at 390; under emulated reduced motion a below-fold row computes opacity 1. Contrast on rendered pixels: text core 13.97:1 on white, the red number 5.95:1 on white and on the band strip, muted 5.74:1 at 390.
+
+Two measured observations, both pre-existing and not introduced by the variant:
+
+1. Enter dispatched through CDP activates a row summary but produced no click event on a person-card summary, identically on this variant and on the shipped box page, while Space activates both. The disclosure is native `<details>` either way; the keyboard path worth trusting here is Tab plus Space.
+2. At 390 the header nav sits flush to the viewport edge on every page (brand left edge 0, `Apply for GB` right edge 390): `header.site nav` sets `padding: 18px 0`, which beats `.wrap`'s horizontal gutter. The fix is one line in `site.css` (`padding-block: 18px`) and belongs to a shared-shell pass, since six other pages move with it.
