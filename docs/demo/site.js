@@ -49,8 +49,15 @@ document.querySelectorAll('.dept').forEach(dept => {
     if (fine.matches) {
       card.addEventListener('mouseenter', () => { if (!card.dataset.pinned) card.open = true; });
       card.addEventListener('mouseleave', () => { if (!card.dataset.pinned) card.open = false; });
-      card.querySelector('summary').addEventListener('click', () => {
-        card.dataset.pinned = card.open ? '' : '1';   // click fires before the native toggle
+      // First click pins the card open, second click closes it. Without this the click that was
+      // meant to open a hover-opened card closes it instead, which leaves a pointer user with no
+      // way to the state a keyboard user reaches with Enter. On a coarse pointer nothing here runs
+      // and the native toggle is the whole interaction.
+      card.querySelector('summary').addEventListener('click', e => {
+        if (card.dataset.pinned) { card.dataset.pinned = ''; return; }
+        e.preventDefault();
+        card.dataset.pinned = '1';
+        card.open = true;
       });
     }
   });

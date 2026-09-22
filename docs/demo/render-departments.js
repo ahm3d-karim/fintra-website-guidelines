@@ -70,14 +70,14 @@
     // Every block is conditional: a missing field renders nothing, never an empty quote mark, an
     // empty list or the word undefined (acceptance criteria 5).
     const body = el('div', 'card__body');
-    if (m.profile) body.append(el('p', null, m.profile));
+    if (m.profile) body.append(el('p', 'card__profile', m.profile));
     if (m.quote) body.append(el('p', 'card__quote', m.quote));
     if (Array.isArray(m.credentials) && m.credentials.length) {
       const ul = el('ul', 'card__creds');
       m.credentials.forEach(c => ul.append(el('li', null, c)));
       body.append(ul);
     }
-    if (m.jd) body.append(el('p', null, m.jd));
+    if (m.jd) body.append(el('p', 'card__jd', m.jd));
     if (m.work && m.work.label) {
       const line = el('p', null, m.work.label + ' \u00b7 ');
       line.style.margin = '0';

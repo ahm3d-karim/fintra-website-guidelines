@@ -139,12 +139,25 @@ details.card>summary::-webkit-details-marker{display:none}
 .grid--people .card__remit{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;
   -webkit-line-clamp:2;line-clamp:2}
 
-/* an opened card takes the whole row: in a 174px column the detail text is 134px wide, which turns
-   one paragraph into a tower. The row reflows instead, and only one card per department is open. */
-.grid--people details.card[open]{grid-column:1/-1}
-.grid--people details.card[open] .card__top{flex-direction:row;align-items:center;gap:16px}
-.grid--people details.card[open] .card__remit{white-space:normal}
-.grid--people details.card[open] .tile{width:56px;height:56px;font-size:14px}
+/* A card opened deliberately (click, Enter or tap) takes the whole row: in a 174px column the
+   detail text is 134px wide, which turns one paragraph into a tower. Hover must NOT span, because
+   the card moving down a row takes it out from under the pointer and the open/close loop never
+   settles. Only one card per department is open, so the row reflows for one figure at a time. */
+.grid--people details.card[data-pinned="1"]{grid-column:1/-1}
+.grid--people details.card[data-pinned="1"] .card__top{flex-direction:row;align-items:center;gap:16px}
+.grid--people details.card[data-pinned="1"] .tile{width:56px;height:56px;font-size:14px}
+/* Hover is the peek: the profile and the quote, both clamped, and nothing else. At 174px the full
+   body is a 721px tower in a 134px column, so the rest of the profile arrives on the click that
+   pins the card, which is also the state that spans the row. Fine pointers only, since hover only
+   exists there and a coarse pointer gets everything on the native toggle. */
+@media (hover: hover) and (pointer: fine){
+  .grid--people details.card:not([data-pinned="1"]) .card__creds,
+  .grid--people details.card:not([data-pinned="1"]) .card__jd{display:none}
+  .grid--people details.card:not([data-pinned="1"]) .card__profile,
+  .grid--people details.card:not([data-pinned="1"]) .card__quote{
+    display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;-webkit-line-clamp:3;line-clamp:3}
+  .grid--people details.card:hover{background:var(--band)}
+}
 
 /* Departments footer: the wordmark, the page links on one row, then what is still a placeholder. */
 .foot__row{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;margin:0 0 20px;padding-bottom:20px;

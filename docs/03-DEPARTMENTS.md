@@ -109,10 +109,13 @@ Four files, two of them shared:
 departments.html          shell: page head, title, lede, the roster container, the footer
 data/departments.js       window.FINTRA_DEPARTMENTS, the roster
 render-departments.js     builds every department and every card from the roster
-site.css, site.js         shared with the other six pages; site.css gains the departments blocks
+site.css, site.js         shared with the other six pages: site.css gains the departments blocks,
+                          site.js gains one click rule (nothing else has .dept cards)
 ```
 
 Load order is the data file, then the renderer, then `site.js`, which wires the cards and collects the `.rise` blocks once they exist. Nothing is typed as markup, so criterion 6 holds: a department, a person or a quote is a data edit.
+
+Hover, click and tap do different amounts of work. On a fine pointer, hover expands the card in place and shows the profile and the quote, each clamped to three lines, because at 174px the full body is a 721px tower in a 134px column. The click that follows pins the card, and a pinned card is the one that spans the row and shows the credentials and the job description. On a coarse pointer there is no hover step: the native toggle shows everything at once. The hover state deliberately does not span the row, because a card that moves down a row leaves the pointer, closes, snaps back under it and opens again, and that loop never settles. `site.js` takes one change for the same reason: the first click pins a card open and the second closes it, since the click meant to open a hover-opened card used to close it instead.
 
 Member fields as built: `name`, `role`, `year`, `remit` (one line, truncated by CSS), `profile`, `quote`, `credentials`, `jd`, and the optional `work` and `photo`. A missing field renders nothing at all, so no card can show an empty quote mark, an empty list or `undefined`. `work` is a link, a label with a visible pending marker, or absent, in which case the line does not exist. `photo` is a square repo file; without it the card shows the initials monogram, which is also the fallback if the file fails.
 
